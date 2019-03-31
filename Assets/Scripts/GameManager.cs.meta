@@ -1,10 +1,13 @@
 fileFormatVersion: 2
 guid: 2768da1c8f213b84582077435f0c8f8b
-timeCreated: 1516198264
-licenseType: Free
 MonoImporter:
+  externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - mazePrefab: {fileID: 11442196, guid: 37e3d486e6826a4429fec3d0861b0823, type: 2}
+  - playerPrefab: {fileID: 11480526, guid: 45dd1ee6f41ed1748979f09151759027, type: 2}
+  - flagPrefab: {fileID: 114409582414148676, guid: abd200563acef8547a67157bbf17cccb,
+      type: 2}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

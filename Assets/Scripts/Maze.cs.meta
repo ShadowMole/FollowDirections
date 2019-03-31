@@ -1,10 +1,13 @@
 fileFormatVersion: 2
 guid: 6e30adb1b6383484fa694205a74acb19
-timeCreated: 1516198480
-licenseType: Free
 MonoImporter:
+  externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - cellPrefab: {instanceID: 0}
+  - cellWithGoalPrefab: {instanceID: 0}
+  - passagePrefab: {instanceID: 0}
+  - doorPrefab: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

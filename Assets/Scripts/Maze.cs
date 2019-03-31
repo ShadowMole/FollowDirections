@@ -26,12 +26,8 @@ public class Maze : MonoBehaviour {
 
 	private List<MazeRoom> rooms = new List<MazeRoom>();
 
-	public List<SpookyLightSystem> spooky = new List<SpookyLightSystem>();
-
 	[Range(0f, 1f)]
 	public float doorProbability;
-
-	public SpookyLightSystem spookyLightsPrefab;
 
 	public IntVector2 RandomCoordinates{
 		get{
@@ -48,14 +44,27 @@ public class Maze : MonoBehaviour {
 	}
 
 	public IEnumerator Generate(){
-		CreateSpookyLights ();
-		WaitForSeconds delay = new WaitForSeconds (generationStepDelay);
+        switch (Data.Difficulty)
+        {
+            case 1:
+                size.x = 10;
+                size.z = 10;
+                break;
+            case 2:
+                size.x = 20;
+                size.z = 20;
+                break;
+            default:
+                size.x = 30;
+                size.z = 30;
+                break;
+        }
 		cells = new MazeCell[size.x, size.z];
 		List<MazeCell> activeCells = new List<MazeCell> ();
 		DoFirstGenerationStep (activeCells);
 		IntVector2 coordinates = RandomCoordinates;
 		while (activeCells.Count > 0) {
-			yield return delay;
+			yield return 0;
 			DoNextGenerationStep (activeCells);
 		}
 		for (int i = 0; i < rooms.Count; i++) {
@@ -133,10 +142,10 @@ public class Maze : MonoBehaviour {
 	}
 
 	private void CreateWall(MazeCell cell, MazeCell otherCell, MazeDirection direction){
-		MazeWall wall = Instantiate (wallPrefabs[Random.Range(0, wallPrefabs.Length)]) as MazeWall;
+		MazeWall wall = Instantiate (wallPrefabs[Random.Range(0, wallPrefabs.Length)]);
 		wall.Initialize (cell, otherCell, direction);
 		if (otherCell != null) {
-			wall = Instantiate (wallPrefabs[Random.Range(0, wallPrefabs.Length)]) as MazeWall;
+			wall = Instantiate (wallPrefabs[Random.Range(0, wallPrefabs.Length)]);
 			wall.Initialize (otherCell, cell, direction.GetOpposite ());
 		}
 	}
@@ -150,15 +159,5 @@ public class Maze : MonoBehaviour {
 		newRoom.settings = roomSettings [newRoom.settingsIndex];
 		rooms.Add (newRoom);
 		return newRoom;
-	}
-
-	private void CreateSpookyLights(){
-		for(int i = ((-1 * size.x)); i <= size.x; i += 10){
-			for(int j = ((-1 * size.z)); j <= size.z; j += 10){
-				SpookyLightSystem newSpooky = Instantiate (spookyLightsPrefab) as SpookyLightSystem;
-				newSpooky.SetPosition (new Vector3 (1f * i, 10f, 1f * j));
-				spooky.Add (newSpooky);
-			}
-		}
 	}
 }

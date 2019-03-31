@@ -10,7 +10,10 @@ public class MazeCell : MonoBehaviour {
 
 	public MazeRoom room;
 
+    private bool isWinner;
+
 	public void Initialize(MazeRoom room){
+        isWinner = false;
 		room.Add (this);
 		transform.GetChild (0).GetComponent<Renderer> ().material = room.settings.floorMaterial;
 	}
@@ -41,9 +44,27 @@ public class MazeCell : MonoBehaviour {
 		}
 	}
 
+    public int getPassages()
+    {
+        int num = 0;
+        foreach(MazeCellEdge edge in edges)
+        {
+            if(edge is MazePassage)
+            {
+                num++;
+            }
+        }
+        return num;
+    }
+
 	public MazeCellEdge GetEdge(MazeDirection direction){
 		return edges [(int)direction];
 	}
+
+    public MazeCellEdge[] GetEdges()
+    {
+        return edges;
+    }
 
 	public void OnPlayerEntered(){
 		room.Show ();
@@ -52,6 +73,11 @@ public class MazeCell : MonoBehaviour {
 		}
 	}
 
+    public void OnFlagSet()
+    {
+        isWinner = true;
+    }
+
 	public void OnPlayerExited(){
 		room.Hide ();
 		for (int i = 0; i < edges.Length; i++) {
@@ -59,11 +85,16 @@ public class MazeCell : MonoBehaviour {
 		}
 	}
 
+    public bool getIsWinner()
+    {
+        return isWinner;
+    }
+
 	public void Show(){
-		gameObject.SetActive (true);
+		//gameObject.SetActive (true);
 	}
 
 	public void Hide(){
-		gameObject.SetActive (false);
+		//gameObject.SetActive (false);
 	}
 }

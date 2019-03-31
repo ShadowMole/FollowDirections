@@ -6,6 +6,10 @@ public class Player : MonoBehaviour {
 
 	private MazeDirection currentDirection;
 
+    private Helper helper;
+
+    public Directions text;
+
 	private void Look(MazeDirection direction){
 		transform.localRotation = direction.ToRotation ();
 		currentDirection = direction;
@@ -18,6 +22,12 @@ public class Player : MonoBehaviour {
 		currentCell = cell;
 		transform.localPosition = cell.transform.localPosition;
 		currentCell.OnPlayerEntered ();
+        if(helper == null)
+        {
+            helper = new Helper();
+            helper.setText(text);
+        }
+        helper.setCurrentCell(currentCell);
 	}
 
 	private void Move(MazeDirection direction){
@@ -25,7 +35,8 @@ public class Player : MonoBehaviour {
 		if (edge is MazePassage) {
 			SetLocation (edge.otherCell);
 		}
-	}
+        helper.help();
+    }
 
 	private void Update(){
 		if (Input.GetKeyDown (KeyCode.W) || Input.GetKeyDown (KeyCode.UpArrow)) {
@@ -42,4 +53,14 @@ public class Player : MonoBehaviour {
 			Look(currentDirection.GetNextClockwise());
 		}
 	}
+
+    public MazeCell getCurrentCell()
+    {
+        return currentCell;
+    }
+
+    public Helper getHelper()
+    {
+        return helper;
+    }
 }
