@@ -28,8 +28,8 @@ public class GameManager : MonoBehaviour {
             SceneManager.LoadScene("WinScene");
         }
 		if (Input.GetKeyDown (KeyCode.Space)) {
-			RestartGame ();
-		}
+            SceneManager.LoadScene("MazeMenu");
+        }
 	}
 
 	private IEnumerator BeginGame(){
